@@ -1,0 +1,10 @@
+# Ignore the large file
+ivamicro.h5
+
+# Ignore temporary files
+*.tmp
+*.bak
+
+# Ignore Python cache
+__pycache__/
+*.pyc

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .image-preview {
+            margin-top: 20px;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        .result p {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Classification</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" onchange="previewImage(event)" required>
+            <button type="submit">Predict</button>
+        </form>
+        
+        <!-- Image Preview -->
+        {% if img_path %}
+        <div class="image-preview">
+            <h2>Uploaded Image:</h2>
+            <img src="{{ url_for('static', filename=img_path) }}" id="img-preview">
+        </div>
+        {% endif %}
+        
+        <!-- Prediction Result -->
+        {% if prediction %}
+        <div class="result">
+            <h2>Prediction Result:</h2>
+            <p>{{ prediction }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const output = document.getElementById('img-preview');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = () => URL.revokeObjectURL(output.src);
+        }
+    </script>
+</body>
+</html>
